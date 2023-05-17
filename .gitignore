@@ -7,6 +7,7 @@
 /bld/*.gccargs
 /bld/*.bat
 /bld/*.linkargs
+/bld/*.buildoutput.txt
 
 # Auto generated shell scripts
 bld/ios_e_sqlcipher.sh
