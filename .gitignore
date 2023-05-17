@@ -2,6 +2,7 @@
 /bld/android_e_sqlite3/
 /bld/obj/
 /bld/bin/Debug/
+/bld/crosscompilers/
 /bld/*.libtoolfiles
 /bld/*.gccargs
 /bld/*.bat
