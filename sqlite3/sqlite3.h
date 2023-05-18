@@ -6262,6 +6262,8 @@ SQLITE_API int sqlite3_sleep(int);
 */
 SQLITE_API SQLITE_EXTERN char *sqlite3_temp_directory;
 
+SQLITE_API SQLITE_EXTERN char *sqlite3_slave_directory;
+
 /*
 ** CAPI3REF: Name Of The Folder Holding Database Files
 **

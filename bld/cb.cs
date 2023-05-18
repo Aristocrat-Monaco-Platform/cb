@@ -1937,6 +1937,7 @@ public static class cb
  
         var cfiles = new List<string>();
         cfiles.Add(Path.Combine(sqlcipher_dir, "sqlite3.c"));
+		cfiles.Add(Path.Combine(sqlcipher_dir, "vfsmirror.c"));
         foreach (var s in tomcrypt_cfiles)
         {
             cfiles.Add(Path.Combine(tomcrypt_src_dir, s));

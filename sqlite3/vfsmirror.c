@@ -118,10 +118,7 @@
 # define MSVC_VERSION 0
 #endif
 
-#if MSVC_VERSION=!0
-    #include <Windows.h>
-#endif
-
+#include <Windows.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -996,7 +993,8 @@ static BOOL dirExists(const char* dirName)
 
     return FALSE;    // this is not a directory!
 }
-extern int set_mirror_directory(const wchar_t* slave_dir) {
+
+SQLITE_API int set_mirror_directory(const wchar_t* slave_dir) {
     if (registered) {
         vfsmirror_printf("Failed, already registered.");
         return 0;
