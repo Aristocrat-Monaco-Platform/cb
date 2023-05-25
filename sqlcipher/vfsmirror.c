@@ -994,22 +994,23 @@ static BOOL dirExists(const char* dirName)
     return FALSE;    // this is not a directory!
 }
 
-SQLITE_API int set_mirror_directory(const wchar_t* slave_dir) {
+SQLITE_API int set_mirror_directory(const char* slave_dir) {
     if (registered) {
-        vfsmirror_printf("Failed, already registered.");
         return 0;
     }
-    size_t converted = 0;
-    wcstombs_s(&converted, zSlaveDir, NAME_MAX - 1, slave_dir, NAME_MAX - 1);
+    size_t converted = strlen(slave_dir);
+    if (converted >= NAME_MAX)
+    {
+        return 0;
+    }
+    snprintf(zSlaveDir, NAME_MAX, slave_dir);
     while (zSlaveDir[converted - 1] == '/' || zSlaveDir[converted - 1] == '\\' && converted > 0) {
         converted--;
         zSlaveDir[converted] = 0;
     }
     if (converted < 2 || !dirExists(zSlaveDir)) {
-        vfsmirror_printf("Failed to registered invalid directory %s", zSlaveDir);
         return 0;
     }
     registered = 1;
-    vfsmirror_register("trace", 0, (int (*)(const char*, void*))fputs, stderr, 1);
     return 1;
 }
