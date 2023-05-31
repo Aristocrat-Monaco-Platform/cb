@@ -1012,5 +1012,6 @@ SQLITE_API int set_mirror_directory(const char* slave_dir) {
         return 0;
     }
     registered = 1;
+    vfsmirror_register("trace", 0, (int (*)(const char*, void*))fputs, stderr, 1);
     return 1;
 }
