@@ -1370,6 +1370,7 @@ public static class cb
 				libs
 				);
 
+#if not  // Exclude Linux cross compile targets
 			write_linux_multi(
 				"e_sqlite3",
                 "cross",
@@ -1379,8 +1380,10 @@ public static class cb
 				includes,
 				libs
 				);
+#endif
 		}
 
+#if not  // Exclude additional Linux cross compile, android, and apple targets
 		{
 			var defines = new Dictionary<string,string>();
 			add_basic_sqlite3_defines(defines);
@@ -1492,7 +1495,7 @@ public static class cb
 				libs
 				);
 		}
-
+#endif  // if not
     }
 
     static void write_e_sqlcipher()
@@ -2022,13 +2025,17 @@ public static class cb
 
 				new win_target(VCVersion.v143, Flavor.plain, Machine.x86),
 				new win_target(VCVersion.v143, Flavor.plain, Machine.x64),
+#if not
 				new win_target(VCVersion.v143, Flavor.plain, Machine.arm),
 				new win_target(VCVersion.v143, Flavor.plain, Machine.arm64),
+#endif
 
 				new win_target(VCVersion.v143, Flavor.appcontainer, Machine.x86),
 				new win_target(VCVersion.v143, Flavor.appcontainer, Machine.x64),
+#if not
 				new win_target(VCVersion.v143, Flavor.appcontainer, Machine.arm),
 				new win_target(VCVersion.v143, Flavor.appcontainer, Machine.arm64),
+#endif
 			};
 
 			write_win_multi(
@@ -2088,6 +2095,8 @@ public static class cb
 				includes,
 				libs
 				);
+				
+#if not
 			write_linux_multi(
 				"e_sqlcipher",
                 "cross",
@@ -2097,8 +2106,10 @@ public static class cb
 				includes,
 				libs
 				);
+#endif
 		}
 
+#if not  // Exclude additional Linux cross compile, android, and apple targets
 		{
 			var defines = new Dictionary<string,string>
 			{
@@ -2271,6 +2282,7 @@ public static class cb
 				libs
 				);
 		}
+#endif  // if not
     }
 
 	static void write_sqlcipher_apple_cc()

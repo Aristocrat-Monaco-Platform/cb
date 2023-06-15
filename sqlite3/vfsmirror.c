@@ -118,7 +118,12 @@
 # define MSVC_VERSION 0
 #endif
 
+#if defined(_MSC_VER)
 #include <Windows.h>
+#elif defined (__GNUC__)
+#include <sys/stat.h>
+#endif
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -161,7 +166,7 @@ struct vfsmirror_file {
     sqlite3_file* pReal[2];      /* The real underlying file */
 };
 static char zSlaveDir[NAME_MAX] = { 0, };
-static BOOL registered = 0;
+static int registered = 0;
 
 /*
 ** Method declarations for vfsmirror_file.
@@ -982,16 +987,21 @@ SQLITE_API int vfsmirror_register(
     return sqlite3_vfs_register(pNew, makeDefault);
 }
 
-static BOOL dirExists(const char* dirName)
+static int dirExists(const char* dirName)
 {
+#if defined(_MSC_VER)
     DWORD ftyp = GetFileAttributesA(dirName);
     if (ftyp == INVALID_FILE_ATTRIBUTES)
-        return FALSE;  //something is wrong with your path!
+        return 0;  //something is wrong with your path!
 
     if (ftyp & FILE_ATTRIBUTE_DIRECTORY)
-        return TRUE;   // this is a directory!
-
-    return FALSE;    // this is not a directory!
+        return 1;   // this is a directory!
+#elif defined(__GNUC__)
+    struct stat stats;
+    if (stat(dirName, &stats) == 0 && S_ISDIR(stats.st_mode))
+        return 1;   // this is a directory!
+#endif
+    return 0;    // this is not a directory!
 }
 
 SQLITE_API int set_mirror_directory(const char* slave_dir) {
