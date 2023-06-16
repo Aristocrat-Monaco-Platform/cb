@@ -1013,7 +1013,7 @@ SQLITE_API int set_mirror_directory(const char* slave_dir) {
     {
         return 0;
     }
-    snprintf(zSlaveDir, NAME_MAX, slave_dir);
+    memcpy(zSlaveDir, slave_dir, converted + 1);
     while (zSlaveDir[converted - 1] == '/' || zSlaveDir[converted - 1] == '\\' && converted > 0) {
         converted--;
         zSlaveDir[converted] = 0;
