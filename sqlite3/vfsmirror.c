@@ -120,8 +120,10 @@
 
 #if defined(_MSC_VER)
 #include <Windows.h>
+const char* PATH_SEPARATOR = "\\";
 #elif defined (__GNUC__)
 #include <sys/stat.h>
+const char* PATH_SEPARATOR = "/";
 #endif
 
 #include <string.h>
@@ -663,7 +665,7 @@ static int vfsmirrorShmUnmap(sqlite3_file* pFile, int delFlag) {
 static const char* vfsmirrorReplicaPath(char* dest, const char* sourcePath, size_t size)
 {
     strncpy(dest, zSlaveDir, size);
-    strncat(dest, "\\", size);
+    strncat(dest, PATH_SEPARATOR, size);
     strncat(dest, fileTail(sourcePath), size);
     return dest;
 }
